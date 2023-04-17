@@ -2,7 +2,7 @@
 
 These set of ROS2 nodes explores the potential for making the use of 3GPP TS 23.434 SEAL (Service Enabler Architecture Layer) even easier and more automatic in various industry verticals applying ROS2 for their operation. The proposed solution involves implementing a mapping node that converts ROS2 settings to 3GPP SEAL requests, as well as an information collecting proxy node. 
 
-![Basic architecture]](/docs/chatter.png)
+![Basic architecture](/docs/chatter.png)
 
 We cover three SEAL functionalities: 
 -   group management

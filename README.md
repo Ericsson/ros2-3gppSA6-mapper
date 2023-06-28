@@ -22,6 +22,17 @@ After sourcing the workspace
 	ros2 topic echo /chatter
 
 # Citation
+[G. Szabó, "Towards The Automatic Network Resource Management of Robot Operating System In Programmable Mobile Networks," in IEEE Access, doi: 10.1109/ACCESS.2023.3289922.](https://ieeexplore.ieee.org/document/10164106)
+
+@ARTICLE{10164106,
+  author={Szabó, Géza},
+  journal={IEEE Access}, 
+  title={Towards The Automatic Network Resource Management of Robot Operating System In Programmable Mobile Networks}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={1-1},
+  doi={10.1109/ACCESS.2023.3289922}}
 
 
 

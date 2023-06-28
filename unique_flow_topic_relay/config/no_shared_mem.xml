@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+
+    <!-- This is needed to disable shared memory communication on localhost, its done by only enabling an UDPv4 transport
+		 https://fast-dds.docs.eprosima.com/en/latest/fastdds/transport/udp/udp.html
+    -->
+    <transport_descriptors>
+        <transport_descriptor>
+            <transport_id>udp_transport</transport_id>
+            <type>UDPv4</type>
+<!--
+			<sendBufferSize>9216</sendBufferSize>
+            <receiveBufferSize>9216</receiveBufferSize>
+			<non_blocking_send>true</non_blocking_send>
+-->
+
+        </transport_descriptor>
+    </transport_descriptors>
+
+    <participant profile_name="UDPParticipant" is_default_profile="true">
+        <rtps>
+            <userTransports>
+                <transport_id>udp_transport</transport_id>
+            </userTransports>
+            <useBuiltinTransports>false</useBuiltinTransports>
+        </rtps>
+    </participant>
+    
+    
+    
+    
+    
+
+	<data_writer profile_name="default" is_default_profile="true">
+<!--		<qos>
+			<data_sharing>
+				<kind>OFF</kind>
+			</data_sharing>
+		</qos>
+-->
+<!--
+		Because we are using a custom QoS file we need to set the ROS2 default, because the FastDDS default cant deal with ROS2 messages "Not enough memory in the buffer stream",
+		https://answers.ros.org/question/358131/ros2-configure-tcp-communication-for-cloud-endpoint/?answer=369981#post-id-369981
+-->
+		<historyMemoryPolicy>PREALLOCATED_WITH_REALLOC</historyMemoryPolicy>
+	</data_writer>
+
+	<data_reader profile_name="default" is_default_profile="true">
+<!--
+		<qos>
+			<data_sharing>
+				<kind>OFF</kind>
+			</data_sharing>
+		</qos>
+-->
+		<historyMemoryPolicy>PREALLOCATED_WITH_REALLOC</historyMemoryPolicy>
+	</data_reader>
+</profiles>

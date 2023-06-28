@@ -1,0 +1,70 @@
+launch:
+
+- arg:
+    name: "no_shared_mem"
+    default: "true"
+    # doesnt work in galactic works in humble (https://github.com/ros2/launch/issues/524)
+    #choices: ["true", "false"]
+
+- arg:
+    name: "topic"
+    default: "image"
+    # doesnt work in galactic works in humble (https://github.com/ros2/launch/issues/524)
+    #choices: ["true", "false"]
+
+- set_env:
+    name: "RMW_IMPLEMENTATION"
+    value: "rmw_fastrtps_cpp"
+- set_env:
+    if: "$(var no_shared_mem)"
+    name: "MW_FASTRTPS_USE_QOS_FROM_XML"
+    value: "1"
+- set_env:
+    if: "$(var no_shared_mem)"
+    name: "FASTRTPS_DEFAULT_PROFILES_FILE"
+    value: "$(find-pkg-share unique_flow_topic_relay)/config/no_shared_mem.xml"
+    
+- node:
+    pkg: "image_tools"
+    exec: "cam2image"
+    name: "$(var topic)_talker"
+    param:
+    -
+      name: "width"
+      value: 640
+    -
+      name: "height"
+      value: 360
+    remap:
+    -
+        from: "image"
+        to: "$(var topic)_touf"
+
+#- executable:
+#    cmd: "env"
+#    output: "screen"
+
+
+- node:
+    pkg: "unique_flow_topic_relay"
+    exec: "unique_flow_topic_relay"
+    name: "$(var topic)_topic_relay"
+    #launch-prefix: "xterm -e lldb -- "
+    param:
+    -
+      name: "discovery_period"
+      value: 1.0
+    -
+      name: "topic_names"
+      value: ["/$(var topic)_touf"]
+    -
+      name: "to_uf_name"
+      value: "_touf"
+    -
+      name: "uf_name"
+      value: ""
+    -
+      name: "publish_localhost_addresses"
+      value: true
+    
+
